@@ -1,0 +1,10 @@
+.adminClass {
+    color: blue;
+    &.admin {
+       background-color: green
+    }
+
+    &.non-admin {
+        background-color: aqua;
+    }
+}

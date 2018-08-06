@@ -1,0 +1,17 @@
+.spicyLevelAttr {
+    color: blue;
+    &.high {
+        background-color: red;
+    }
+
+    &.medium {
+        background-color: orange;
+    }
+
+    &.low {
+        background-color: green;
+    }
+
+    
+    
+}
