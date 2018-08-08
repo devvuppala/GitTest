@@ -7,13 +7,42 @@ import {MenuItem, SpiceLevel} from '../models/app.menu.model'
     selector:'menu-catalog',    
     styleUrls: ['../styles/app.menu.scss'],
     template:`
-    Ternary / optional operator: {{menuItems?.lenght}}
+    Ternary / optional operator: {{menuItems?.length}}
+    <hr>
     <button (click) = "enableAddDiv()" class="btn btn-primary"> Add New Item</button><br/><br/><br/>
     
     <div *ngIf = "showAddDiv">
-        <menu-add (onAddNewMenuItem) = "addNewMenuItem($event)"></menu-add>        
+        <menu-add (onAddNewMenuItem) = "addNewMenuItem($event)">
+            <h3>This is going to be an {{menuItems?.length + 1}} th Dish</h3>
+        </menu-add>        
         <br/><br/><br/>
     </div> 
+    <ul class="list-group" *ngFor = "let item of menuItems ; let indx=index" >
+        <menu-item [menuItem] = "item" (onChange) = "priceChangeEmitter($event)">
+            <li class="list-group-item py-2"
+                 [ngClass] = "{'list-group-item-primary' : indx%2 == 0 , 'list-group-item-success' : indx%2 == 1}">
+            <div class="row">
+                <div class = "col-sm">
+                    <!--<figure class="figure" >-->
+                        <img src="https://www.bing.com/th?id=OIP.GB6pCb9fp5S-hLyL-b-dagHaFN&w=297&h=209&c=7&o=5&pid=1.7"
+                            style="width:50%;"
+                            alt="Paneer Butter Masala.">
+                        <!--<figcaption class="figure-caption">{{item.itemName}} : {{indx % 2}}</figcaption>
+                    </figure>-->
+                </div>
+                <div class = "col-sm">
+                {{item.itemName}} <br/>
+                {{item.itemPrice}} <br/>
+                Spicy Level: {{item.spiceLevel}} <br/>
+                </div>
+                <div class = "col-sm">
+                    <button (click) = "deleteTheItem(item)" class="btn btn-danger float-right" >&nbsp;X&nbsp;</button>
+                </div>
+                </div>
+            </li>
+        </menu-item>
+    </ul>
+    <hr>
     <table border="1"  class="table  table-striped">
     <thead  class="thead-dark">
         <tr>
@@ -61,8 +90,13 @@ export class MenuCatalogComponent implements OnInit{
 
     ngOnInit() {
         this.menuService.getMenuItems().subscribe((data: MenuItem[]) => {
-            console.log(data);
+            //console.log(data);
             this.menuItems = data;
+        })
+
+        this.menuService.getMenuItemsFB().subscribe((response: Response) => {
+            console.log(response);
+           // this.menuItems = data;
         })
     }
 
@@ -88,7 +122,10 @@ export class MenuCatalogComponent implements OnInit{
             //this.menuItems.push(newMenuItem);
             this.menuService.addMenuItem(newMenuItem).subscribe((menuItem : MenuItem) => {
                 this.menuItems = [...this.menuItems,menuItem]
-            })            
+            })  
+            this.menuService.addMenuItemFB(newMenuItem).subscribe((menuItem : MenuItem) => {
+                this.menuItems = [...this.menuItems,menuItem]
+            })           
             this.showAddDiv = false;
         } catch {
             console.log("Error");
@@ -96,9 +133,13 @@ export class MenuCatalogComponent implements OnInit{
     }
 
     deleteTheItem(selectedMenuItem:MenuItem) {
-        this.menuItems = this.menuItems.filter(item => {
-           console.log(item.itemID + " : " + selectedMenuItem.itemID);
-            return item.itemID != selectedMenuItem.itemID
-        });
+        this.menuService.deleteMenuItem(selectedMenuItem).subscribe((response:Response) => {
+            console.log(response);
+            this.menuItems = this.menuItems.filter(item => {
+            console.log(item.itemID + " : " + selectedMenuItem.itemID);
+                return item.itemID != selectedMenuItem.itemID
+            });
+        })
+        
     }
 }

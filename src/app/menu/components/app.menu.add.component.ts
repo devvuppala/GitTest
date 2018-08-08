@@ -5,7 +5,7 @@ import { MenuItem , SpiceLevel} from '../models/app.menu.model';
     selector:'menu-add',    
     styleUrls: ['../styles/app.menu.scss'],
     template:`
-    
+    <ng-content></ng-content>
 <table border="1"  class="table"><tr><td>
   <div class="form-group row">
     <label for="menuNameID" class="col-sm-2 col-form-label">Name</label>

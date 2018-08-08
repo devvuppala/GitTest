@@ -8,9 +8,11 @@ import {MenuItem, SpiceLevel} from '../models/app.menu.model'
     styleUrls: ['../styles/app.menu.scss'],
     template:`
 
-    <!--<input type="text" [(ngModel)] = "menuItem.itemPrice">-->
+   
+    <ng-content></ng-content>
+     <!--<input type="text" [(ngModel)] = "menuItem.itemPrice">
     <input type="text" [(ngModel)] = "menuItem.itemPrice">
-    <button (click) = "emitChange()" clas="btn btn-success" >Emit</button>
+    <button (click) = "emitChange()" clas="btn btn-success" >Emit</button>-->
     `
 })
 
