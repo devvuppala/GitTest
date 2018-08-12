@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-LABEL author="Chandrashekar Vedire"
+LABEL author="Dev Vuppala"
 
 WORKDIR /usr/share/nginx/html
 
