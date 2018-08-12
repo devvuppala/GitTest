@@ -1,4 +1,4 @@
-ng build --prod 
+RUN ng build --prod 
 FROM nginx:alpine
 
 LABEL author="Dev Vuppala"
