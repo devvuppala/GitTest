@@ -6,11 +6,13 @@ import {MenuService} from './service/app.menu.service'
 import { MenuItemComponent } from './components/app.menu.item.component';
 import { MenuAddComponent } from './components/app.menu.add.component';
 import {HttpClientModule} from '@angular/common/http'
+import {HttpModule} from '@angular/http'
+import { FireBaseMenuService } from './service/app.menu-firebase.service';
 
 @NgModule({
-    imports:[BrowserModule, FormsModule, HttpClientModule],
+    imports:[BrowserModule, FormsModule, HttpClientModule,HttpModule],
     declarations :[MenuCatalogComponent, MenuItemComponent, MenuAddComponent],
-    providers: [MenuService],
+    providers: [MenuService, FireBaseMenuService],
     exports:[MenuCatalogComponent]
 })
 

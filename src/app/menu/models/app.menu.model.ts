@@ -1,9 +1,15 @@
 export interface MenuItem {
-    itemID : number,
-    itemName : string,
-    itemPrice : number,
-    spiceLevel: SpiceLevel
-}
+    $key: string,
+    id : number,
+    name : string,
+    description: string,
+    price : number,
+    spiceLevel: string,
+    imageLocation: string,
+    ingredients: string
+  }
+
+
 
 
 export enum SpiceLevel {

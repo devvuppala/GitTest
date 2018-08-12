@@ -23,15 +23,16 @@ export class MenuItemComponent implements OnChanges{
     @Output() onChange: EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
 
     ngOnChanges(changes) {
-        console.log(this.menuItem.itemPrice);
+        //console.log(this.menuItem.itemPrice);
         if(changes.menuItem) {
             this.menuItem = Object.assign({}, changes.menuItem.currentValue)
         }
     }
-    emitChange() {
-        console.log("Menu : " + this.menuItem.itemPrice);
+
+    /*emitChange() {
+        console.log("Menu : " + this.menuItem.price);
         this.onChange.emit(this.menuItem);
-    }
+    }*/
 
 
 }
