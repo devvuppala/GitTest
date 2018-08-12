@@ -1,3 +1,4 @@
+ng build --prod 
 FROM nginx:alpine
 
 LABEL author="Dev Vuppala"
