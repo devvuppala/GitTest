@@ -19,3 +19,12 @@
 .dropdown {
     float: left;
 }
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+.validationErrorMessage {
+    color: red;
+    font-style: italic;
+}
