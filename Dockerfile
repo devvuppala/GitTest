@@ -1,3 +1,5 @@
+#RUN ng build --prod 
+RUN pwd
 FROM nginx:alpine
 
 LABEL author="Dev Vuppala"
