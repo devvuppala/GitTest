@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators, FormArray  } from '@angular/forms';
 import { User } from '../app.user.model';
+import { signUpCustomValidator } from './signup.custom.validators';
 
 @Component({
   selector: 'app-signup',
@@ -19,8 +20,13 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.signUpReactiveForm = new FormGroup({
-      'emailID' : new FormControl(null, [Validators.required, Validators.email]),
-      'password' : new FormControl(null,[Validators.required, this.validatePassword.bind(this)]),
+      'emailID' : new FormControl(null, [Validators.required, Validators.email], 
+                                    [signUpCustomValidator.validUserName]//Asyncronous Validators
+                                  ),
+      'password' : new FormControl(null,[Validators.required, 
+                                          signUpCustomValidator.validatePassword ] //Sync or regular validators
+                                        
+                                  ),
       'userType' : new FormControl(null,[Validators.required]),
       'address' : new FormControl(null,[Validators.required]),
       'address2' : new FormControl(null),
@@ -28,21 +34,34 @@ export class SignupComponent implements OnInit {
       'state' : new FormControl(null,[Validators.required]),
       'zipCode' : new FormControl(null,[Validators.required])/*,
       'favFood' : new FormArray([])*/
+      
     });
 
     this.states = this.populateStates();
 
-    this.signUpReactiveForm.valueChanges.subscribe(
+    /*this.signUpReactiveForm.valueChanges.subscribe(
       (value) => console.log(value)
-    )
+    )*/
 
-    this.signUpReactiveForm.statusChanges.subscribe(
+    /*this.signUpReactiveForm.statusChanges.subscribe(
       (status) => console.log(status)
-    )
+    )*/
+
+    // /this.signUpReactiveForm.reset;
   }
 
   onRegristrationFormSubmit() {
-    console.log(this.signUpReactiveForm.value.zipCode)
+    console.log(this.signUpReactiveForm)
+    this.regUser = new User(this.signUpReactiveForm.value.email,
+                            this.signUpReactiveForm.value.password,
+                            this.signUpReactiveForm.value.userType,
+                            this.signUpReactiveForm.value.address,
+                            this.signUpReactiveForm.value.address2,
+                            this.signUpReactiveForm.value.city,
+                            this.signUpReactiveForm.value.state,
+                            this.signUpReactiveForm.value.zipCode)
+    console.log(this.regUser);
+
   }
 
   onAddFavFood() {

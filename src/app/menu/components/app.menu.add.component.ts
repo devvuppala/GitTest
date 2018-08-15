@@ -5,11 +5,11 @@ import { NgForm } from '@angular/forms';
 @Component ({
     selector:'menu-add',    
     styleUrls: ['../styles/app.menu.scss'],
-    encapsulation: ViewEncapsulation.ShadowDom,
+    encapsulation: ViewEncapsulation.Emulated,
     template:`
     
 <div class="card">
-<div class="card-body" style="background-color:white">
+<div class="card-body" style="border:3px;background-color:#B8DAFF">
   <ng-content></ng-content>
   <hr>  
   <form (ngSubmit) = "onFormSubmit(addOrEditFormReference)" #addOrEditFormReference="ngForm">
@@ -38,7 +38,7 @@ import { NgForm } from '@angular/forms';
       <textarea  rows="2" class="form-control" [(ngModel)]="menuItem.ingredients" name= "ingredients" placeholder="Enter Ingredients"></textarea>
     </div>
   </div>
-  p
+  
   <div class="form-group row">
     <label for="menuNameImage" class="col-sm-2 col-form-label">Menu Image:</label>
     <div class="col-sm-10">
@@ -52,9 +52,9 @@ import { NgForm } from '@angular/forms';
     <div class="col-sm-10">
       <div class="input-group-prepend">
         <span class="input-group-text" id="inputGroupPrepend">$</span>
-        <input type="number" [(ngModel)]="menuItem.price" name= "price" placeholder="Enter Price" required #price="ngModel"> 
+        <input type="number" [(ngModel)]="menuItem.price" name= "price" placeholder="Enter Price" required menuPriceValidation #price="ngModel"> 
         <span class="help-block validationErrorMessage" 
-          *ngIf="price.invalid && ( price.touched)">Please enter Price </span>
+          *ngIf="price.invalid && ( price.touched)">Please enter Price > $9</span>
       </div>
     </div>
   </div>
@@ -152,6 +152,7 @@ export class MenuAddComponent implements OnInit, OnDestroy{
     @Output() onEditNewMenuItem : EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
     @Input() menuItem: MenuItem
     @Input() addMenu: boolean
+    
 
     
     ngOnInit() {

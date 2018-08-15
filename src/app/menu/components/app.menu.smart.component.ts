@@ -42,7 +42,7 @@ import { FireBaseMenuService } from '../service/app.menu-firebase.service';
                 </div>
                 <div class = "col-sm-6">
                 {{item.name}} <br/>
-                {{item.price}} <br/>
+                Price : {{item.price | discountPipe : 0 | currency:'USD'}} <br/>
                 Spicy Level: {{item.spiceLevel}} <br/>
                 </div>
                 <div class = "col-sm-3">

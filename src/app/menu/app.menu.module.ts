@@ -8,10 +8,12 @@ import { MenuAddComponent } from './components/app.menu.add.component';
 import {HttpClientModule} from '@angular/common/http'
 import {HttpModule} from '@angular/http'
 import { FireBaseMenuService } from './service/app.menu-firebase.service';
+import { MenuPriceValidator } from './components/app.menu.custom.validator';
+import { priceCurrencyPipe } from './components/app.menu.currency.pipe';
 
 @NgModule({
     imports:[BrowserModule, FormsModule, HttpClientModule,HttpModule],
-    declarations :[MenuCatalogComponent, MenuItemComponent, MenuAddComponent],
+    declarations :[MenuCatalogComponent, MenuItemComponent, MenuAddComponent,MenuPriceValidator, priceCurrencyPipe],
     providers: [MenuService, FireBaseMenuService],
     exports:[MenuCatalogComponent]
 })

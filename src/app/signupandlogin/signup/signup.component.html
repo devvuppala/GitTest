@@ -9,7 +9,7 @@
           <label for="inputEmail4">Email</label>
           <input type="email"  autocomplete="off" 
           formControlName= "emailID" 
-          class="form-control" id="inputEmail4" placeholder="Email">
+          class="form-control" placeholder="Email">
           <span class="help-block validationErrorMessage"
            *ngIf="!signUpReactiveForm.get('emailID').valid && (signUpReactiveForm.get('emailID').touched)">
            Please enter valid Email! 
@@ -18,41 +18,41 @@
         <div class="form-group col-md-4">
           <label for="inputPassword4">Password</label>
           <input type="password" 
-          formControlName = "password" 
-          class="form-control" id="inputPassword4" placeholder="Password">
-          <span class="help-block validationErrorMessage"
-           *ngIf="!signUpReactiveForm.get('password').valid && (signUpReactiveForm.get('password').touched)">
+            formControlName = "password"  autocomplete="off"
+            class="form-control" placeholder="Password">
             <span class="help-block validationErrorMessage"
-                *ngIf="!signUpReactiveForm.get('password').errors['passwordValidator']">
-                Password must be atleast 9 letters! 
-            </span>
-            <span class="help-block validationErrorMessage"
-                *ngIf="!signUpReactiveForm.get('password').errors['required']">
-                Please enter valid Password!
-            </span>            
+              *ngIf="!signUpReactiveForm.get('password').valid && signUpReactiveForm.get('password').touched">
+                <span class="help-block validationErrorMessage"
+                    *ngIf="signUpReactiveForm.get('password').errors['required']">
+                    Please enter valid Password!
+                </span>  
+                <span class="help-block validationErrorMessage"
+                    *ngIf="signUpReactiveForm.get('password').errors['patternNotMatched']">
+                    Password must be atleast 9 letters! 
+                </span>         
            </span>
            
         </div>
         <div class="form-group col-md-4 float-right">          
           <legend class="col-form-label ">User Type</legend>
           <div class="col-sm-10">
-            <div class="form-check">
-              <input class="form-check-input" 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-check-input" 
               formControlName = "userType" 
               type="radio" id="gridRadios1" value="ADMIN" checked>
               <label class="form-check-label" for="gridRadios1">
                 ADMIN
               </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" 
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-check-input" 
               formControlName= "userType" 
               type="radio"  id="gridRadios2" value="CUSTOMER">
               <label class="form-check-label" for="gridRadios2">
                 CUSTOMER
               </label>
+                <span class="help-block validationErrorMessage"
+                      *ngIf="!signUpReactiveForm.get('userType').valid && signUpReactiveForm.get('userType').errors['required']">
+                      Please select User Type
+                  </span>  
             </div>
-          </div>
         </div>
       </div>
     <div class="form-group">
@@ -60,6 +60,10 @@
       <input type="text" 
       formControlName = "address" 
       class="form-control" id="inputAddress" placeholder="1234 Main St">
+      <span class="help-block validationErrorMessage"
+          *ngIf="!signUpReactiveForm.get('address').valid && signUpReactiveForm.get('address').touched && signUpReactiveForm.get('address').errors['required']">
+          Please enter valid address
+      </span> 
     </div>
     <div class="form-group">
       <label for="inputAddress2">Address 2</label>
@@ -73,19 +77,31 @@
         <input type="text" 
         formControlName = "city" 
         class="form-control" id="inputCity">
+          <span class="help-block validationErrorMessage"
+            *ngIf="!signUpReactiveForm.get('city').valid && signUpReactiveForm.get('city').touched && signUpReactiveForm.get('city').errors['required']">
+            Please enter valid City
+          </span>
       </div>
       <div class="form-group col-md-4">
         <label for="inputState">State</label>
         <select formControlName = "state" id="inputState" class="form-control">
-          <option selected>Choose...</option>
+          <option selected value = "null">Choose...</option>
           <ng-container *ngFor="let usState of states">
             <option value="usState">{{usState}}</option>
           </ng-container>
         </select>
+        <span class="help-block validationErrorMessage"
+            *ngIf="!signUpReactiveForm.get('state').valid && signUpReactiveForm.get('state').touched && signUpReactiveForm.get('state').errors['required']">
+            Please enter valid State
+          </span>
       </div>
       <div class="form-group col-md-2">
         <label for="inputZip">Zip</label>
         <input formControlName = "zipCode" type="text" class="form-control" id="inputZip">
+        <span class="help-block validationErrorMessage"
+            *ngIf="!signUpReactiveForm.get('zipCode').valid && signUpReactiveForm.get('zipCode').touched && signUpReactiveForm.get('zipCode').errors['required']">
+            Please  enter valid zip code
+          </span>
       </div>
     </div>
     <!--<div formArrayName="favFood">
