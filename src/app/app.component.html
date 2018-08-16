@@ -17,17 +17,23 @@
     {{user.fName}}
 </div>-->
 
-<app-header></app-header>
-<div class="card flex" style="height: 89%">
-    <div class="card-body">
-        <app-signup></app-signup><br>
-        <hr>
-        <menu-catalog></menu-catalog>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="card flex" style="height: 100%">
+            <div class="card-header sticky-top">
+                <app-header></app-header> 
+            </div>
+            <div class="card-body">
+                <router-outlet></router-outlet>
+            </div>
+            <div class="card-footer fixed-bottom" style="background-color: azure;">
+                <p style="text-align: center; font-family: cursive"> @Dev Vuppala , Organic Kitchen</p>
+            </div>
+        </div>
     </div>
-    <div class="card-footer text-muted  " style="background-color: white;">
-     <p style="text-align: center; font-family: cursive"> @Dev Vuppala , Organic Kitchen</p>
-    </div>
-  </div>
+</div>
+
 
 
 

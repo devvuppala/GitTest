@@ -1,0 +1,37 @@
+<div class="mx-auto " >
+<div class="card col-md-offset-4" style="width: 40%; align-content: center;">
+    <div class="card-header" style="background-color:azure">
+      Login 
+    </div>
+    <div class="card-body">
+        <form (ngSubmit)="loginTheUser(loginForm)" #loginForm="ngForm">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input ngModel name="emailID" type="email"  class="form-control" id="organicEmail"
+               aria-describedby="emailHelp" required email placeholder="Enter email" #loginEmail="ngModel">
+               <span class="help-block validationErrorMessage" *ngIf="!loginEmail.valid && loginEmail.touched">
+                 Please enter a valid Email! 
+               </span>
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>            
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input ngModel name="password" type="password" class="form-control" 
+              id="organicPassword" placeholder="Password" required #loginPassword="ngModel">
+              <span class="help-block validationErrorMessage"  *ngIf="!loginPassword.valid && loginPassword.touched">
+                Please enter a valid Password! 
+              </span>
+          </div>
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Remember Me</label>
+          </div>
+          <div class="card-footer" style="background-color: azure">      
+              Not a registers User? <a class="active" href="/signup" routerLink="/signup">Register</a>
+              <button type="submit"  class="btn btn-primary float-right">Login</button>
+          </div>
+        </form>
+    </div>
+    
+  </div>
+</div>

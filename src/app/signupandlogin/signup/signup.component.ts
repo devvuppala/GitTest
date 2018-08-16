@@ -1,20 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators, FormArray  } from '@angular/forms';
-import { User } from '../app.user.model';
 import { signUpCustomValidator } from './signup.custom.validators';
+import { User } from '../model/app.user.model';
+import { FireBaseUserService } from '../services/app.user.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  styleUrls: ['./signup.component.css'],
+  encapsulation: ViewEncapsulation.Emulated,
 })
 export class SignupComponent implements OnInit {
 
 
   signUpReactiveForm: FormGroup ;
   states: String[];
-  regUser: User;
-  constructor() { 
+  regUser: User = {
+    $key: null,
+    id : 0,
+    emailID : null,
+    password : null,
+    userType : null,
+    address : null,
+    address2 : '',
+    city : null,
+    state : null,
+    zipCode : null
+  }
+
+  signUpFormNotValid: boolean =  false;
+
+  constructor(private fireBaseUserService : FireBaseUserService,
+              private router : Router,
+              private route : ActivatedRoute) { 
 
   }
 
@@ -51,16 +70,24 @@ export class SignupComponent implements OnInit {
   }
 
   onRegristrationFormSubmit() {
-    console.log(this.signUpReactiveForm)
-    this.regUser = new User(this.signUpReactiveForm.value.email,
-                            this.signUpReactiveForm.value.password,
-                            this.signUpReactiveForm.value.userType,
-                            this.signUpReactiveForm.value.address,
-                            this.signUpReactiveForm.value.address2,
-                            this.signUpReactiveForm.value.city,
-                            this.signUpReactiveForm.value.state,
-                            this.signUpReactiveForm.value.zipCode)
-    console.log(this.regUser);
+    //console.log(this.signUpReactiveForm)
+    if(this.signUpReactiveForm.valid) {
+      this.regUser.emailID = this.signUpReactiveForm.value.emailID;
+      this.regUser.password = this.signUpReactiveForm.value.password;
+      this.regUser.userType = this.signUpReactiveForm.value.userType;
+      this.regUser.address = this.signUpReactiveForm.value.address;
+      this.regUser.address2 = this.signUpReactiveForm.value.address2;
+      this.regUser.city = this.signUpReactiveForm.value.city;
+      this.regUser.state = this.signUpReactiveForm.value.state;
+      this.regUser.zipCode = this.signUpReactiveForm.value.zipCode;
+      //console.log(this.regUser);
+      let returnUser = this.fireBaseUserService.addUser(this.regUser);
+      this.router.navigate(['/menus'])
+      //this.router.navigate(['/menus'], {relativeTo: this.route})
+    } else {
+      this.signUpFormNotValid = true;
+    }
+    
 
   }
 

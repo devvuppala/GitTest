@@ -1,20 +1,20 @@
-import {Component, OnInit} from '@angular/core' 
+import {Component, OnInit, ViewEncapsulation} from '@angular/core' 
 import {MenuService} from '../service/app.menu.service'
 
 import {MenuItem, SpiceLevel} from '../models/app.menu.model'
 
 import {Response} from '@angular/http'
 import { FireBaseMenuService } from '../service/app.menu-firebase.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component ({
     selector:'menu-catalog',    
     styleUrls: ['../styles/app.menu.scss'],
+    encapsulation: ViewEncapsulation.None,
     template:`
     <!--Ternary / optional operator: {{menuItems?.length}}
     <hr>-->
-    
-    <button *ngIf = "!showAddDiv" (click) = "enableAddDiv()" class="btn btn-primary float-right"> Add Menu</button>
-    <br/><br/><br/>
+    <!--<h5>This are Menu Items</h5>-->   
     <div class=  "row">
     <div class="col-sm-6">
         <div *ngIf = "isError">
@@ -23,14 +23,14 @@ import { FireBaseMenuService } from '../service/app.menu-firebase.service';
             </div>
         </div>
         <div class="progress" *ngIf="loadingMenuItemsInProgress">
-        <div class="progress-bar progress-bar-striped" style="width:10%"></div>
-    </div>
+            <div class="progress-bar progress-bar-striped" style="width:10%"></div>
+        </div>
         <ul class="list-group" *ngFor = "let item of menuItems ; let indx=index" >
         
         <menu-item [menuItem] = "item" (onChange) = "priceChangeEmitter($event)" class="cursor: pointer;">
             <li class="list-group-item py-2"
-                [ngClass] = "{'list-group-item-primary' : indx%2 == 0 , 'list-group-item-success' : indx%2 == 1}"
-                (click) = "onItemClick(item)">
+                [ngClass] = "{'list-group-item-primary' : indx%2 == 0 , 'list-group-item-success' : indx%2 == 1}">
+                <!--(click) = "onItemClick(item)"-->
             <div class="row">
                 <div class = "col-sm-3">
                     <!--<figure class="figure" >-->
@@ -40,20 +40,39 @@ import { FireBaseMenuService } from '../service/app.menu-firebase.service';
                         <!--<figcaption class="figure-caption">{{item.itemName}} : {{indx % 2}}</figcaption>
                     </figure>-->
                 </div>
-                <div class = "col-sm-6">
+                <div class = "col-sm-3">
                 {{item.name}} <br/>
                 Price : {{item.price | discountPipe : 0 | currency:'USD'}} <br/>
                 Spicy Level: {{item.spiceLevel}} <br/>
                 </div>
-                <div class = "col-sm-3">
-                    <button (click) = "deleteTheItem(item)" class="btn btn-danger float-right" >&nbsp;X&nbsp;</button>
+                <div class = "col-sm-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Quantity</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <ng-container *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
+                                <option value="{{i}}">{{i}}</option>
+                            </ng-container>
+                        </select>&nbsp;&nbsp;&nbsp;&nbsp;                    
+                        <button (click) = "addToCart(quantity, item)" class="btn btn-success float-right" >&nbsp;Add To Cart&nbsp;</button>  
+                    </div>
+                    <div *ngIf="true">
+                        <hr>                                    
+                        <button (click) = "deleteTheItem(item)" class="btn btn-danger float-right" >&nbsp;Delete&nbsp;</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;             
+                        <button (click) = "editTheItem(item)" class="btn btn-warning float-right" >&nbsp;Edit&nbsp;</button>
+                    </div>
                 </div>
                 </div>
             </li>
+            <br>
         </menu-item>        
     </ul>
     </div>
     <div class="col-sm-6">
+    <button *ngIf = "!showAddDiv" (click) = "enableAddDiv()" class="btn btn-primary float-right"> Add Menu</button>
+    <br/><br/><br/>
     <div *ngIf = "showAddDiv">
         <menu-add (onAddNewMenuItem) = "addNewMenuItem($event)" [menuItem] = "newMenuItem" [addMenu]="true">
            <h5 class="text-success">Add new menu (ID = {{menuItems?.length + 1}})
@@ -99,7 +118,8 @@ export class MenuCatalogComponent implements OnInit{
     //Dependecy Injection
 
     constructor(private menuService : MenuService,
-                private fireBaseMenuService: FireBaseMenuService) {
+                private fireBaseMenuService: FireBaseMenuService,
+                private activatedRoute : ActivatedRoute) {
         
     }
 
@@ -111,7 +131,7 @@ export class MenuCatalogComponent implements OnInit{
         })*/
         this.populateMenuItemsList();
         this.loadingMenuItemsInProgress = false;
-                  
+        console.log(this.activatedRoute.snapshot.params['id'])         
     }
 
     populateMenuItemsList() {
@@ -182,7 +202,7 @@ export class MenuCatalogComponent implements OnInit{
         //console.log(returnValue);
     }
 
-    onItemClick(selectedMenuItem:MenuItem) {
+    editTheItem(selectedMenuItem:MenuItem) {
         //console.log("onItemClick: " + selectedMenuItem.name);
         this.menuItemToEdit = selectedMenuItem;
         this.disableAddDiv();

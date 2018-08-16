@@ -15,7 +15,7 @@ export class FireBaseMenuService {
 
     getMenuItemsFB() { 
         this.menuItems =  this.firebaseDB.list('MenuItem');
-        //console.log(this.menuItems);
+        console.log("Invoked");
         return this.menuItems;
     }
 
