@@ -8,6 +8,8 @@ import { DevUser } from './app.user.model';
 })
 export class AppComponent {
   title = 'tester';
+  currentDate = new Date();
+  
 
   siriUser: DevUser = {
     id : 1,

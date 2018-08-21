@@ -52,7 +52,10 @@ import { NgForm } from '@angular/forms';
     <div class="col-sm-10">
       <div class="input-group-prepend">
         <span class="input-group-text" id="inputGroupPrepend">$</span>
-        <input type="number" [(ngModel)]="menuItem.price" name= "price" placeholder="Enter Price" required menuPriceValidation #price="ngModel"> 
+        <input type="number"  [(ngModel)]="menuItem.price" name= "price" placeholder="Enter Price"
+         required menuPriceValidation 
+         appCurrencyDirective [validationFailureColor]  = "'red'" [validationSuccessColor] = "'green'"
+         #price="ngModel"> 
         <span class="help-block validationErrorMessage" 
           *ngIf="price.invalid && ( price.touched)">Please enter Price > $9</span>
       </div>

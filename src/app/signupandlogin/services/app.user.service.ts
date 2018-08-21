@@ -40,9 +40,9 @@ export class FireBaseUserService {
      }
 
      getUserByEmailAndPassword(emailID , password) {
-        this.getUsers();
-        const userQuery = this.users.query.equalTo(emailID);
-        console.log(userQuery);
+        this.getUsers()
+        console.log(this.users);
+        console.log(this.firebaseDB.database.ref('user'));
      }
  
     deleteMenuItemFB(userToDelete: User) {

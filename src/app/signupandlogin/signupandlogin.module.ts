@@ -5,12 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { FireBaseUserService } from './services/app.user.service';
 import { LoginComponent } from './login/login.component';
+import { BasicFontDirective } from '../app-directives/app-font.directive';
 
 @NgModule({
   imports: [
     CommonModule, FormsModule,BrowserModule, ReactiveFormsModule
   ],
-  declarations: [SignupComponent, LoginComponent],
+  declarations: [SignupComponent, LoginComponent,BasicFontDirective],
   exports:[SignupComponent],
   providers:[FireBaseUserService]
 })

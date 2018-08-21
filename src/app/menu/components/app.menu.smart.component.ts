@@ -6,15 +6,15 @@ import {MenuItem, SpiceLevel} from '../models/app.menu.model'
 import {Response} from '@angular/http'
 import { FireBaseMenuService } from '../service/app.menu-firebase.service';
 import { ActivatedRoute } from '@angular/router';
+import { Promise, reject } from 'q';
 
 @Component ({
     selector:'menu-catalog',    
     styleUrls: ['../styles/app.menu.scss'],
-    encapsulation: ViewEncapsulation.None,
     template:`
     <!--Ternary / optional operator: {{menuItems?.length}}
     <hr>-->
-    <!--<h5>This are Menu Items</h5>-->   
+    <!--<i>This are Menu Items</i>  -->
     <div class=  "row">
     <div class="col-sm-6">
         <div *ngIf = "isError">
@@ -25,9 +25,12 @@ import { ActivatedRoute } from '@angular/router';
         <div class="progress" *ngIf="loadingMenuItemsInProgress">
             <div class="progress-bar progress-bar-striped" style="width:10%"></div>
         </div>
-        <ul class="list-group" *ngFor = "let item of menuItems ; let indx=index" >
-        
+        <label>Search Menu Item:</label>&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" [(ngModel)] = "itemSearchText">
+        <hr>
+        <ul class="list-group" *ngFor = "let item of menuItems | menuFilterPipe:itemSearchText: 'name'" >
+         
         <menu-item [menuItem] = "item" (onChange) = "priceChangeEmitter($event)" class="cursor: pointer;">
+        
             <li class="list-group-item py-2"
                 [ngClass] = "{'list-group-item-primary' : indx%2 == 0 , 'list-group-item-success' : indx%2 == 1}">
                 <!--(click) = "onItemClick(item)"-->
@@ -42,7 +45,8 @@ import { ActivatedRoute } from '@angular/router';
                 </div>
                 <div class = "col-sm-3">
                 {{item.name}} <br/>
-                Price : {{item.price | discountPipe : 0 | currency:'USD'}} <br/>
+                <!--Price : {{item.price | discountPipe : 0 | currency:'USD'}} <br/>-->
+                Price : {{item.price | currencyConvertor : 'usd' : 'usd'}}<br/>
                 Spicy Level: {{item.spiceLevel}} <br/>
                 </div>
                 <div class = "col-sm-6">
@@ -63,6 +67,19 @@ import { ActivatedRoute } from '@angular/router';
                         &nbsp;&nbsp;&nbsp;&nbsp;             
                         <button (click) = "editTheItem(item)" class="btn btn-warning float-right" >&nbsp;Edit&nbsp;</button>
                     </div>
+                   <!-- <div *notNgIf="false">
+                        <p>Not Ng-If test True</p>
+                    </div>
+                    <div *notNgIf="true">
+                        <p>Not Ng-If test False</p>
+                    </div>-->
+
+                    <!--<div [ngSwitch]="switchTest">
+                        <p *ngSwitchCase="1">Test1</p>
+                        <p *ngSwitchCase="2">Test2</p>
+                        <p *ngSwitchCase="3">Test3</p>
+                        <p *ngSwitchDefault>Test4</p>
+                    </div>-->
                 </div>
                 </div>
             </li>
@@ -103,6 +120,13 @@ export class MenuCatalogComponent implements OnInit{
     showEditDiv: boolean = false;
     isError:boolean =  false;
     errorMessage:string = '';
+    //switchTest = 3;
+    itemSearchText: string = '';
+    /*discountPercentage = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('20')
+        }, 2000)
+    });*/
     newMenuItem : MenuItem = {
         $key: null,
         id : 0,

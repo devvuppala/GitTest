@@ -17,7 +17,6 @@
     {{user.fName}}
 </div>-->
 
-
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="card flex" style="height: 100%">
@@ -28,7 +27,7 @@
                 <router-outlet></router-outlet>
             </div>
             <div class="card-footer fixed-bottom" style="background-color: azure;">
-                <p style="text-align: center; font-family: cursive"> @Dev Vuppala , Organic Kitchen</p>
+                <p style="text-align: center; font-family: cursive"> @Dev Vuppala , Organic Kitchen <b>{{currentDate | date : 'medium' : 'fullTime' | uppercase}}</b></p>
             </div>
         </div>
     </div>
