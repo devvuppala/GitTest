@@ -13,6 +13,8 @@ const applicationRoutes: Routes = [
     {path: 'signup' , canActivate:[AuthorizationGuard] ,component: SignupComponent},
     {path: 'menus' , canActivate:[AuthorizationGuard] ,component: MenuCatalogComponent},
     {path: 'menus/:id' , canActivate:[AuthorizationGuard] ,component: MenuCatalogComponent},
+    {path: 'menuHistory' , loadChildren: './menu-history/menu-history.module#MenuHistoryModule'}, 
+    //{path: 'menuHistory' , component:MenuHistoryComponent}, 
     {path: 'page-not-found' , component: PageNotFoundComponent},
     {path: '**' , redirectTo:'/page-not-found'}
   ]

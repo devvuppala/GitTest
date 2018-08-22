@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppLanguageService } from '../app-shared-service/app.shared.language.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  appLanguageSelected : string = 'english';
+  constructor(private appLanguageService: AppLanguageService) { }
 
   ngOnInit() {
+    this.appLanguageService.appLanguageSubject.subscribe(
+      (languageSelected: string) => {
+        this.appLanguageSelected = languageSelected;
+      }
+    )
   }
 
 }

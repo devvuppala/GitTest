@@ -19,6 +19,7 @@ import { LoginComponent } from './signupandlogin/login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthorizationGuard } from './authorization-guard.service';
+import { AppLanguageService } from './app-shared-service/app.shared.language.service';
 
 
 @NgModule({
@@ -40,7 +41,7 @@ import { AuthorizationGuard } from './authorization-guard.service';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule
   ],
-  providers: [AuthorizationGuard],
+  providers: [AuthorizationGuard,AppLanguageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

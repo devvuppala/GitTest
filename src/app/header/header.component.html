@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-sm navbar-custom">
   <a class="navbar-brand" routerLink="/">
     <!--<img src="assets/logo.png" width="500" height="50" class="d-inline-block align-top" alt="">-->
-    <p style="text-align: center; font-family: cursive">Organic Kitchen</p>
+    <p *ngIf = "appLanguageSelected === 'english'" style="text-align: center; font-family: cursive">Organic Kitchen</p>
+    <p *ngIf = "appLanguageSelected === 'spanish'" style="text-align: center; font-family: cursive">Orgánico Cocina</p>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCustom">
       <i class="fa fa-bars fa-lg py-1 text-white"></i>
@@ -9,11 +10,17 @@
   <div class="navbar-collapse collapse" id="navbarCustom">
       <ul class="navbar-nav" >
           <li class="nav-item " routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-              <a class="nav-link" routerLink="/" >Home</a>
+              <a *ngIf = "appLanguageSelected === 'english'" class="nav-link" routerLink="/" >Home</a>
+              <a *ngIf = "appLanguageSelected === 'spanish'" class="nav-link" routerLink="/" >Casa</a>
           </li>
           <li class="nav-item " routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <a class="nav-link" routerLink="menus">Menu</a>
+            <a *ngIf = "appLanguageSelected === 'english'" class="nav-link" routerLink="menus">Menu</a>
+            <a *ngIf = "appLanguageSelected === 'spanish'" class="nav-link" routerLink="menus">Menú</a>
           </li>
+          <li class="nav-item " routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a *ngIf = "appLanguageSelected === 'english'" class="nav-link" routerLink="menuHistory">Menu-History</a>
+                <a *ngIf = "appLanguageSelected === 'spanish'" class="nav-link" routerLink="menuHistory">Menú-Historia</a>
+           </li>
           <!--<li class="nav-item">
               <a class="nav-link" href="#">Link</a>
           </li>

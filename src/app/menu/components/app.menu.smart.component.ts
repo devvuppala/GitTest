@@ -7,6 +7,7 @@ import {Response} from '@angular/http'
 import { FireBaseMenuService } from '../service/app.menu-firebase.service';
 import { ActivatedRoute } from '@angular/router';
 import { Promise, reject } from 'q';
+import 'rxjs/Rx'
 
 @Component ({
     selector:'menu-catalog',    
@@ -159,7 +160,8 @@ export class MenuCatalogComponent implements OnInit{
     }
 
     populateMenuItemsList() {
-        this.fireBaseMenuService.getMenuItemsFB().snapshotChanges().subscribe(menuItem => {
+        this.fireBaseMenuService.getMenuItemsFB().snapshotChanges().
+        retry().subscribe(menuItem => {
             this.menuItems = [];
             menuItem.forEach(element => {
                 var y = element.payload.toJSON();

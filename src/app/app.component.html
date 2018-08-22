@@ -22,11 +22,22 @@
         <div class="card flex" style="height: 100%">
             <div class="card-header sticky-top">
                 <app-header></app-header> 
+                <br>               
+                <div class="float-right">
+                    <label>Select App Language: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <select  id="inputGroupSelect01" (change)="handleLanguageChange($event.target.value)">
+                        <option value="english">English</option>
+                        <option value="spanish">Spanish</option>
+                    </select>
+                </div>
+                <br> 
             </div>
-            <div class="card-body">
-                <router-outlet></router-outlet>
+            <div class="card-body"> 
+                <div style="background-color: white">
+                    <router-outlet></router-outlet>
+                </div>
             </div>
-            <div class="card-footer fixed-bottom" style="background-color: azure;">
+            <div class="card-footer" style="background-color: azure;">
                 <p style="text-align: center; font-family: cursive"> @Dev Vuppala , Organic Kitchen <b>{{currentDate | date : 'medium' : 'fullTime' | uppercase}}</b></p>
             </div>
         </div>

@@ -33,4 +33,10 @@ export class signUpCustomValidator {
         })
         return promise;
     }
+
+    promiseTocheckUserName = new Promise((resolve, reject) => {
+        //Call the service to check if the username exists
+        //If exists , return something such that it adds a error
+        //If does not exist return something as null
+    })
 }
