@@ -1,5 +1,7 @@
-import { AbstractControl, FormControl } from "@angular/forms";
+import { AbstractControl, FormControl, ValidationErrors } from "@angular/forms";
 import { Observable } from "rxjs";
+import { UserSpringBootService } from "../services/app.user.springboot.service";
+import { debounce, debounceTime, take, map } from "rxjs/operators";
 
 export class signUpCustomValidator {
     //Password Validator (Pattern)
@@ -18,11 +20,11 @@ export class signUpCustomValidator {
             return null;
         }
         
-    }
+    } 
 
     //Asyncronous Validator
-    static validUserName(control: FormControl) : Promise<any> | Observable<any> {
-        const promise = new Promise<any> ((resolve, reject) => {
+    static validUserName(userSpringBootService:UserSpringBootService, control:FormControl)  {
+        /*const promise = new Promise<any> ((resolve, reject) => {
             setTimeout(() => {
                 if(control.value == 'dummy@test.com') {
                     resolve({'emailValidationError': true});
@@ -31,7 +33,19 @@ export class signUpCustomValidator {
                 }
             } , 1500)
         })
-        return promise;
+        return promise;*/
+
+        console.log("hurrrrrrrrraayyyrar : " + control.value)
+        const q = new Promise((resolve, reject) => {
+            userSpringBootService.checkEmailTaken(control.value).subscribe((emailTaken: boolean) => {
+              if(emailTaken) {
+                resolve({'emailValidationError': true});
+              } else {
+                resolve(null)
+              }
+            })
+        });
+        return q;
     }
 
     promiseTocheckUserName = new Promise((resolve, reject) => {

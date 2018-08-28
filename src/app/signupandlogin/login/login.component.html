@@ -2,7 +2,7 @@
 <div class="mx-auto " style="float:initial" >
 <div class="card col-md-offset-4" style="width: 40%; align-content: center;">
     <div class="card-header" style="background-color:azure">
-      Login 
+      Login <b *ngIf="userNotFound" class="float-right" style="color:red">Email ID , password not matched!</b>
     </div>
     <div class="card-body">
         <form (ngSubmit)="loginTheUser(loginForm)" #loginForm="ngForm">

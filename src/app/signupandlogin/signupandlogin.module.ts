@@ -6,6 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FireBaseUserService } from './services/app.user.service';
 import { LoginComponent } from './login/login.component';
 import { BasicFontDirective } from '../app-directives/app-font.directive';
+import { UserSpringBootService } from './services/app.user.springboot.service';
+import { AppLanguageService } from '../app-shared-service/app.shared.language.service';
 
 @NgModule({
   imports: [
@@ -13,6 +15,6 @@ import { BasicFontDirective } from '../app-directives/app-font.directive';
   ],
   declarations: [SignupComponent, LoginComponent,BasicFontDirective],
   exports:[SignupComponent],
-  providers:[FireBaseUserService]
+  providers:[FireBaseUserService, UserSpringBootService, AppLanguageService]
 })
 export class SignupandloginModule { }

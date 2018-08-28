@@ -4,6 +4,10 @@ import { signUpCustomValidator } from './signup.custom.validators';
 import { User } from '../model/app.user.model';
 import { FireBaseUserService } from '../services/app.user.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { UserSpringBootService } from '../services/app.user.springboot.service';
+import { Observable } from 'rxjs/Observable';
+import { debounceTime } from 'rxjs/operators';
+import { map } from 'rxjs-compat/operator/map';
 
 @Component({
   selector: 'app-signup',
@@ -18,6 +22,7 @@ export class SignupComponent implements OnInit {
   regUser: User = {
     $key: null,
     id : 0,
+    completeName:null,
     emailID : null,
     password : null,
     userType : null,
@@ -32,14 +37,16 @@ export class SignupComponent implements OnInit {
 
   constructor(private fireBaseUserService : FireBaseUserService,
               private router : Router,
-              private route : ActivatedRoute) { 
+              private route : ActivatedRoute,
+              private userSpringBootService: UserSpringBootService) { 
 
   }
 
   ngOnInit() {
     this.signUpReactiveForm = new FormGroup({
+      'completeName': new FormControl(null, [Validators.required]),
       'emailID' : new FormControl(null, [Validators.required, Validators.email], 
-                                    [signUpCustomValidator.validUserName]//Asyncronous Validators
+                                    [this.isEmailUnique.bind(this)]//Asyncronous Validators
                                   ),
       'password' : new FormControl(null,[Validators.required, 
                                           signUpCustomValidator.validatePassword ] //Sync or regular validators
@@ -72,6 +79,7 @@ export class SignupComponent implements OnInit {
     //console.log(this.signUpReactiveForm)
     if(this.signUpReactiveForm.valid) {
       this.regUser.emailID = this.signUpReactiveForm.value.emailID;
+      this.regUser.completeName = this.signUpReactiveForm.value.completeName;
       this.regUser.password = this.signUpReactiveForm.value.password;
       this.regUser.userType = this.signUpReactiveForm.value.userType;
       this.regUser.address = this.signUpReactiveForm.value.address;
@@ -80,8 +88,12 @@ export class SignupComponent implements OnInit {
       this.regUser.state = this.signUpReactiveForm.value.state;
       this.regUser.zipCode = this.signUpReactiveForm.value.zipCode;
       //console.log(this.regUser);
-      let returnUser = this.fireBaseUserService.addUser(this.regUser);
-      this.router.navigate(['/menus'])
+      //let returnUser = this.fireBaseUserService.addUser(this.regUser);
+      this.userSpringBootService.addUser(this.regUser).subscribe(user => {
+        console.log(user);        
+        this.router.navigate(['/'])
+      });
+      
       //this.router.navigate(['/menus'], {relativeTo: this.route})
     } else {
       this.signUpFormNotValid = true;
@@ -102,6 +114,23 @@ export class SignupComponent implements OnInit {
     }
     return null;
   }
+
+  isEmailUnique(control: FormControl) {
+    console.log("hurrrrrrrrraayyyrar : " + control.value)
+    const q = new Observable(() => {
+        this.userSpringBootService.checkEmailTaken(control.value).debounceTime(100).
+            subscribe((emailTaken: boolean) => {
+          console.log(emailTaken)
+          if(emailTaken) {
+            Observable.of({'emailTaken': true});
+          } else {
+            Observable.of(null)
+          }
+        })
+    });
+    return q;
+  }
+
   populateStates() : string[] {
     
       let state: string[]  = [];

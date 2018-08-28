@@ -104,6 +104,30 @@ export class AppComponent implements OnInit , OnDestroy{
     Promise.race([this.simplePromiseTestUsername() , this.simplePasswordTest()]).then((resolve) => {
       console.log('One of them worked :' + resolve)
     })*/
+
+
+    /*const numbers = Observable.interval(1000).take(5);
+
+    let numberFmap: Observable<Observable<number>> = numbers.map((num) => {
+        return Observable.of(num);
+    });
+
+    let numberMap = numbers.map((num) => {
+      return num * 100;
+    })
+
+    numberMap.subscribe((name) => {
+      console.log(name);
+    });
+
+    numberFmap.switchMap((num) => {
+      return num;
+    }).
+    subscribe((num) => {
+        console.log(num);
+    });*/
+
+
     
   }
 

@@ -38,12 +38,6 @@ export class FireBaseUserService {
          console.log(userFromFireBase);
          return userFromFireBase;
      }
-
-     getUserByEmailAndPassword(emailID , password) {
-        this.getUsers()
-        console.log(this.users);
-        console.log(this.firebaseDB.database.ref('user'));
-     }
  
     deleteMenuItemFB(userToDelete: User) {
          return this.users.remove(userToDelete.$key)

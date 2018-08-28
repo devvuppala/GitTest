@@ -9,6 +9,9 @@ import { AppLanguageService } from '../app-shared-service/app.shared.language.se
 export class HeaderComponent implements OnInit {
 
   appLanguageSelected : string = 'english';
+  loggedInUser: string = '';
+  validUser: boolean = false;
+  
   constructor(private appLanguageService: AppLanguageService) { }
 
   ngOnInit() {
@@ -17,6 +20,23 @@ export class HeaderComponent implements OnInit {
         this.appLanguageSelected = languageSelected;
       }
     )
+
+    this.appLanguageService.userName.subscribe(
+      (userName: string) => {
+        this.loggedInUser = userName;
+      }
+    )
+
+    this.appLanguageService.validUser.subscribe(
+      (isValidSession: string) => {
+        if(isValidSession === "true") {
+          this.validUser = true;
+        } else {
+          this.validUser = false;
+        }
+      }
+    )
+    
   }
 
 }

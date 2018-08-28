@@ -5,6 +5,18 @@
       </div>
     <div class="card-body">
     <form [formGroup] = "signUpReactiveForm" (ngSubmit)="onRegristrationFormSubmit()">
+        <div class="form-row">
+            <div class="form-group col-md-8">
+              <label for="completeName"><span style="color:red;font-weight:bold;">*</span>&nbsp;Complete Name</label>
+              <input type="completeName"  autocomplete="off" 
+              formControlName= "completeName" 
+              class="form-control" placeholder="Account Holder Complete Name">
+              <span class="help-block validationErrorMessage"
+               *ngIf="!signUpReactiveForm.get('completeName').valid && (signUpFormNotValid || signUpReactiveForm.get('completeName').touched)">
+               Please enter valid Name! 
+               </span>
+            </div>
+        </div>
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputEmail4"><span style="color:red;font-weight:bold;">*</span>&nbsp;Email</label>
@@ -15,6 +27,18 @@
            *ngIf="!signUpReactiveForm.get('emailID').valid && (signUpFormNotValid || signUpReactiveForm.get('emailID').touched)">
            Please enter valid Email! 
            </span>
+           <span class="help-block validationErrorMessage"
+           *ngIf="!signUpReactiveForm.get('emailID').valid && (signUpFormNotValid || signUpReactiveForm.get('emailID').touched)">
+            <span class="help-block validationErrorMessage"
+                      *ngIf="signUpReactiveForm.get('emailID').errors['emailTaken']">
+                      Email not available
+              </span> 
+              <span class="help-block" style="color:green"
+              *ngIf="signUpReactiveForm.get('emailID').pending">
+              Checking if emailID is available!!!!!!!!
+            </span>         
+           </span>
+           
         </div>
         <div class="form-group col-md-4">
           <label for="inputPassword4"><span style="color:red;font-weight:bold;">*</span>&nbsp;Password</label>
